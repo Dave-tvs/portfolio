@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>David Tovmasyan — Ingénieur mécanique &amp; développeur assisté par IA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F1ECDE;
+    --ink: #1B2430;
+    --ink-soft: #3B4652;
+    --line: #2C4A66;
+    --line-soft: rgba(44,74,102,0.28);
+    --accent: #A8672B;
+    --accent-strong: #8C531F;
+    --muted: #6B6255;
+    --card: #E8E2D0;
+    --focus: #2C4A66;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #0B2545;
+      --ink: #EAF2FA;
+      --ink-soft: #C7D8E8;
+      --line: #6FA8DC;
+      --line-soft: rgba(111,168,220,0.35);
+      --accent: #E0A458;
+      --accent-strong: #F0BE7C;
+      --muted: #9FB6CC;
+      --card: #0F2E58;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #0B2545;
+    --ink: #EAF2FA;
+    --ink-soft: #C7D8E8;
+    --line: #6FA8DC;
+    --line-soft: rgba(111,168,220,0.35);
+    --accent: #E0A458;
+    --accent-strong: #F0BE7C;
+    --muted: #9FB6CC;
+    --card: #0F2E58;
+  }
+  * { box-sizing: inherit; }
+  html { scroll-behavior: smooth; scroll-padding-top: calc(84px + env(safe-area-inset-top, 0px)); }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+    background-image:
+      linear-gradient(var(--line-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+    background-size: 48px 48px;
+    background-position: -1px -1px;
+  }
+  a { color: inherit; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+  h1, h2, h3 { font-family: 'Space Grotesk', 'IBM Plex Sans', sans-serif; margin: 0; }
+  .mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 28px; }
+
+  /* ---------- Header / title block ---------- */
+  header.top {
+    position: sticky; top: 0; z-index: 20;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line-soft);
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  .top-inner { display: flex; align-items: center; justify-content: space-between; padding: 16px 28px; max-width: 980px; margin: 0 auto; gap: 16px; }
+  .brand { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 1.05rem; letter-spacing: 0.01em; white-space: nowrap; }
+  nav.primary { display: flex; gap: 22px; flex-wrap: wrap; }
+  nav.primary a { text-decoration: none; font-size: 0.92rem; color: var(--ink-soft); border-bottom: 1px solid transparent; padding-bottom: 2px; }
+  nav.primary a:hover { color: var(--ink); border-bottom-color: var(--line); }
+  .nav-toggle { display: none; }
+
+  .titleblock {
+    border-top: 1px solid var(--line-soft);
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .titleblock-grid {
+    max-width: 980px; margin: 0 auto; padding: 10px 28px;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+  .titleblock-grid div span { display: block; color: var(--ink-soft); font-size: 0.82rem; margin-top: 2px; }
+  .titleblock-grid div { border-left: 1px solid var(--line-soft); padding-left: 14px; }
+  .titleblock-grid div:first-child { border-left: none; padding-left: 0; }
+
+  /* ---------- Hero ---------- */
+  .hero { padding: 88px 0 64px; position: relative; }
+  .hero-grid { display: grid; grid-template-columns: 1.3fr 0.8fr; gap: 48px; align-items: center; }
+  .hero h1 { font-size: clamp(2.1rem, 4.4vw, 3.4rem); line-height: 1.08; font-weight: 700; }
+  .hero p.lede { margin-top: 22px; max-width: 52ch; color: var(--ink-soft); font-size: 1.08rem; }
+  .hero-actions { display: flex; gap: 14px; margin-top: 32px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 20px; text-decoration: none; font-weight: 500; font-size: 0.95rem;
+    border: 1.5px solid var(--ink); border-radius: 3px; min-height: 44px;
+  }
+  .btn.solid { background: var(--ink); color: var(--paper); }
+  .btn.solid:hover { background: var(--accent-strong); border-color: var(--accent-strong); }
+  .btn.outline { border-color: var(--line); color: var(--ink); }
+  .btn.outline:hover { background: var(--line-soft); }
+
+  .hero-diagram { width: 100%; height: auto; }
+
+  @keyframes drawIn {
+    from { stroke-dashoffset: var(--len); opacity: 0; }
+    to { stroke-dashoffset: 0; opacity: 1; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-diagram path.animated,
+    .hero-diagram circle.animated {
+      stroke-dasharray: var(--len);
+      animation: drawIn 1.4s ease forwards;
+    }
+  }
+
+  /* ---------- Section shell ---------- */
+  section { padding: 64px 0; border-top: 1px solid var(--line-soft); }
+  section .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 36px; flex-wrap: wrap; }
+  section h2 { font-size: 1.7rem; font-weight: 600; }
+  .section-num { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; color: var(--muted); }
+
+  /* ---------- Projects (drawing-sheet cards) ---------- */
+  .sheets { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .sheet {
+    position: relative;
+    background: var(--card);
+    border: 1px solid var(--line-soft);
+    padding: 22px 22px 20px;
+  }
+  .sheet::before, .sheet::after,
+  .sheet .tick-br::before, .sheet .tick-br::after { content: ""; position: absolute; width: 12px; height: 12px; }
+  .sheet::before { top: -1px; left: -1px; border-top: 2px solid var(--line); border-left: 2px solid var(--line); }
+  .sheet::after { top: -1px; right: -1px; border-top: 2px solid var(--line); border-right: 2px solid var(--line); }
+  .sheet .tick-br { position: absolute; inset: 0; pointer-events: none; }
+  .sheet .tick-br::before { bottom: -1px; left: -1px; border-bottom: 2px solid var(--line); border-left: 2px solid var(--line); top: auto; }
+  .sheet .tick-br::after { bottom: -1px; right: -1px; border-bottom: 2px solid var(--line); border-right: 2px solid var(--line); top: auto; }
+  .sheet-ref { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--muted); letter-spacing: 0.03em; }
+  .sheet h3 { font-size: 1.15rem; margin-top: 8px; font-weight: 600; }
+  .sheet p { color: var(--ink-soft); font-size: 0.94rem; margin: 8px 0 0; }
+  .sheet .tags { margin-top: 14px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--ink-soft); border: 1px solid var(--line-soft); padding: 3px 8px; border-radius: 2px; }
+  .sheet .links { margin-top: 16px; display: flex; gap: 16px; flex-wrap: wrap; }
+  .sheet .links a { font-size: 0.88rem; text-decoration: underline; text-underline-offset: 3px; }
+  .sheet .links a:hover { color: var(--accent-strong); }
+  .status-progress { color: var(--accent-strong); font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; }
+
+  /* ---------- Freelance modules ---------- */
+  .modules { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .module { border-left: 2px solid var(--line); padding-left: 18px; }
+  .module .mnum { font-family: 'IBM Plex Mono', monospace; color: var(--muted); font-size: 0.78rem; }
+  .module h3 { font-size: 1.08rem; margin-top: 6px; font-weight: 600; }
+  .module p { color: var(--ink-soft); font-size: 0.94rem; margin-top: 8px; }
+
+  /* ---------- Specs table ---------- */
+  table.specs { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  table.specs tr { border-top: 1px solid var(--line-soft); }
+  table.specs tr:last-child { border-bottom: 1px solid var(--line-soft); }
+  table.specs th, table.specs td { text-align: left; padding: 14px 10px; vertical-align: top; }
+  table.specs th { font-family: 'IBM Plex Mono', monospace; font-weight: 500; font-size: 0.82rem; color: var(--muted); width: 34%; }
+  table.specs td { font-size: 0.96rem; color: var(--ink-soft); }
+
+  /* ---------- Formation ---------- */
+  .formation { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .fcard { border: 1px solid var(--line-soft); padding: 22px; background: var(--card); }
+  .fcard .floc { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: var(--muted); }
+  .fcard h3 { margin-top: 8px; font-size: 1.08rem; }
+  .fcard p { color: var(--ink-soft); font-size: 0.92rem; margin-top: 6px; }
+
+  /* ---------- Footer ---------- */
+  footer { border-top: 1px solid var(--line-soft); padding: 48px 0 calc(48px + env(safe-area-inset-bottom, 0px)); }
+  .foot-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px; align-items: start; }
+  .foot-title { font-size: 1.5rem; font-weight: 600; font-family: 'Space Grotesk', sans-serif; }
+  .foot-contacts { display: flex; flex-direction: column; gap: 10px; margin-top: 18px; }
+  .foot-contacts a { text-decoration: none; font-size: 0.98rem; border-bottom: 1px solid var(--line-soft); padding-bottom: 8px; width: fit-content; }
+  .foot-contacts a:hover { border-bottom-color: var(--ink); }
+  .foot-meta { font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; color: var(--muted); line-height: 1.9; text-align: right; }
+  .ai-note { margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--line-soft); font-size: 0.82rem; color: var(--muted); }
+
+  @media (max-width: 780px) {
+    nav.primary { display: none; }
+    .titleblock-grid { grid-template-columns: repeat(2, 1fr); row-gap: 14px; }
+    .titleblock-grid div:nth-child(3) { border-left: none; padding-left: 0; }
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero { padding: 56px 0 44px; }
+    .sheets { grid-template-columns: 1fr; }
+    .modules { grid-template-columns: 1fr; gap: 30px; }
+    .formation { grid-template-columns: 1fr; }
+    .foot-grid { grid-template-columns: 1fr; }
+    .foot-meta { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">David Tovmasyan</div>
+    <nav class="primary" aria-label="Navigation principale">
+      <a href="#projets">Projets</a>
+      <a href="#freelance">Freelance</a>
+      <a href="#competences">Compétences</a>
+      <a href="#formation">Formation</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+  <div class="titleblock">
+    <div class="titleblock-grid">
+      <div>NOM<span>David Tovmasyan</span></div>
+      <div>FORMATION<span>Mécanique Énergétique — Polytech Marseille</span></div>
+      <div>ÉCHANGE<span>TU Berlin (Erasmus)</span></div>
+      <div>RÉV.<span>Septembre 2026</span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero wrap" id="top">
+    <div class="hero-grid">
+      <div>
+        <h1>3ᵉ année de mécanique. Sites web pour artisans, en marge des cours.</h1>
+        <p class="lede">
+          En 3ᵉ année de Mécanique Énergétique à Polytech Marseille, actuellement en échange à TU Berlin.
+          À côté des études, je construis des sites web et des outils numériques pour des artisans marseillais —
+          en m'appuyant sur GitHub et des workflows assistés par l'IA pour aller plus vite, du code au déploiement.
+        </p>
+        <div class="hero-actions">
+          <a class="btn solid" href="https://github.com/Dave-tvs" target="_blank" rel="noopener">Voir mon GitHub</a>
+          <a class="btn outline" href="#contact">Me contacter</a>
+        </div>
+      </div>
+      <svg class="hero-diagram" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Schéma reliant un engrenage mécanique à un symbole de code">
+        <circle cx="160" cy="160" r="118" fill="none" stroke="var(--line-soft)" stroke-width="1"/>
+        <g fill="none" stroke="var(--line)" stroke-width="2">
+          <path class="animated" style="--len:520" d="M160 60 v18 M160 242 v18 M60 160 h18 M242 160 h18
+            M97 97 l13 13 M210 210 l13 13 M97 223 l13 -13 M210 110 l13 -13"/>
+          <circle class="animated" style="--len:660" cx="160" cy="160" r="70"/>
+          <circle class="animated" style="--len:170" cx="160" cy="160" r="26"/>
+        </g>
+        <g stroke="var(--accent)" stroke-width="2.4" fill="none">
+          <path class="animated" style="--len:60" d="M147 160 h26"/>
+          <path class="animated" style="--len:180" d="M160 147 l9 9 -9 9 -9 -9 z"/>
+        </g>
+        <text x="160" y="292" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--muted)" letter-spacing="1">MÉCANIQUE + CODE</text>
+      </svg>
+    </div>
+  </section>
+
+  <section class="wrap" id="projets">
+    <div class="section-head">
+      <h2>Ce que je construis</h2>
+      <span class="section-num">DÉPÔTS PUBLICS — github.com/Dave-tvs</span>
+    </div>
+    <div class="sheets">
+
+      <article class="sheet"><div class="tick-br"></div>
+        <div class="sheet-ref">PLANCHE 01</div>
+        <h3>mp2c-site</h3>
+        <p>Site avec un back-end API, déployé sur Vercel.</p>
+        <div class="tags"><span class="tag">HTML</span><span class="tag">API</span><span class="tag">Vercel</span></div>
+        <div class="links">
+          <a href="https://mp2c-site.vercel.app" target="_blank" rel="noopener">Voir le site ↗</a>
+          <a href="https://github.com/Dave-tvs/mp2c-site" target="_blank" rel="noopener">Code source</a>
+        </div>
+      </article>
+
+      <article class="sheet"><div class="tick-br"></div>
+        <div class="sheet-ref">PLANCHE 02</div>
+        <h3>site-mecano</h3>
+        <p>Site vitrine mono-fichier, déployé sur Vercel.</p>
+        <div class="tags"><span class="tag">HTML</span><span class="tag">Vercel</span></div>
+        <div class="links">
+          <a href="https://site-mecano.vercel.app" target="_blank" rel="noopener">Voir le site ↗</a>
+          <a href="https://github.com/Dave-tvs/site-mecano" target="_blank" rel="noopener">Code source</a>
+        </div>
+      </article>
+
+      <article class="sheet"><div class="tick-br"></div>
+        <div class="sheet-ref">PLANCHE 03</div>
+        <h3>benoit-ortelli-plomberie</h3>
+        <p>Site vitrine réalisé pour un artisan plombier client.</p>
+        <div class="tags"><span class="tag">HTML</span><span class="tag">Client freelance</span></div>
+        <div class="links">
+          <a href="https://github.com/Dave-tvs/benoit-ortelli-plomberie" target="_blank" rel="noopener">Code source</a>
+        </div>
+      </article>
+
+      <article class="sheet"><div class="tick-br"></div>
+        <div class="sheet-ref">PLANCHE 04</div>
+        <h3>L.O-Plombier</h3>
+        <p>Second site vitrine pour un artisan client, avec visuels dédiés.</p>
+        <div class="tags"><span class="tag">HTML</span><span class="tag">Client freelance</span></div>
+        <div class="links">
+          <a href="https://github.com/Dave-tvs/L.O-Plombier" target="_blank" rel="noopener">Code source</a>
+        </div>
+      </article>
+
+      <article class="sheet"><div class="tick-br"></div>
+        <div class="sheet-ref">PLANCHE 05 <span class="status-progress">— EN COURS</span></div>
+        <h3>marie-fleurs</h3>
+        <p>Référencement local et présence en ligne pour un commerce de fleurs.</p>
+        <div class="tags"><span class="tag">SEO local</span><span class="tag">Client freelance</span></div>
+        <div class="links">
+          <a href="https://github.com/Dave-tvs/marie-fleurs" target="_blank" rel="noopener">Dépôt</a>
+        </div>
+      </article>
+
+      <article class="sheet"><div class="tick-br"></div>
+        <div class="sheet-ref">PLANCHE 06</div>
+        <h3>skills-introduction-to-github</h3>
+        <p>Parcours GitHub Skills — bases du versioning et du workflow Git.</p>
+        <div class="tags"><span class="tag">Git</span><span class="tag">Apprentissage</span></div>
+        <div class="links">
+          <a href="https://github.com/Dave-tvs/skills-introduction-to-github" target="_blank" rel="noopener">Dépôt</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="wrap" id="freelance">
+    <div class="section-head">
+      <h2>Activité freelance</h2>
+      <span class="section-num">MARSEILLE &amp; ENVIRONS</span>
+    </div>
+    <div class="modules">
+      <div class="module">
+        <div class="mnum">01</div>
+        <h3>Sites vitrines pour artisans</h3>
+        <p>Pages HTML mono-fichier pour des artisans de la région marseillaise (plombier, couvreur, artisan
+        multi-métiers) : formulaire de contact WhatsApp ou Formspree, hébergement Vercel, animations soignées
+        avec GSAP et ScrollTrigger.</p>
+      </div>
+      <div class="module">
+        <div class="mnum">02</div>
+        <h3>Plaques NFC — avis Google</h3>
+        <p>Plaques NFC permettant aux commerçants marseillais de récolter des avis Google plus facilement.
+        Prospection de terrain menée sur plusieurs quartiers (Baille, Castellane, Rue de Rome).</p>
+      </div>
+      <div class="module">
+        <div class="mnum">03</div>
+        <h3>Réponses IA aux avis Google</h3>
+        <p>En exploration : un pipeline (IA + Zapier) pour générer automatiquement des réponses aux avis Google
+        des clients artisans, sans développer une solution sur-mesure trop lourde.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" id="competences">
+    <div class="section-head">
+      <h2>Compétences &amp; outils</h2>
+      <span class="section-num">SPÉCIFICATIONS</span>
+    </div>
+    <table class="specs">
+      <tr><th>Développement web</th><td>HTML/CSS/JS mono-fichier, animations GSAP &amp; ScrollTrigger, sites déployés sur Vercel</td></tr>
+      <tr><th>IA &amp; automatisation</th><td>Développement assisté par IA avec Claude Code, automatisations Zapier, connecteur GitHub pour le workflow de code</td></tr>
+      <tr><th>Versioning</th><td>Git &amp; GitHub — dépôts publics, historique de commits, GitHub Skills</td></tr>
+      <tr><th>Intégrations</th><td>Formulaires Formspree, contact WhatsApp, Google Workspace, outils de prospection sous Excel</td></tr>
+    </table>
+  </section>
+
+  <section class="wrap" id="formation">
+    <div class="section-head">
+      <h2>Formation</h2>
+      <span class="section-num">PARCOURS</span>
+    </div>
+    <div class="formation">
+      <div class="fcard">
+        <div class="floc">MARSEILLE, FRANCE</div>
+        <h3>Polytech Marseille</h3>
+        <p>Diplôme d'ingénieur — spécialité Mécanique Énergétique, 3ᵉ année.</p>
+      </div>
+      <div class="fcard">
+        <div class="floc">BERLIN, ALLEMAGNE</div>
+        <h3>TU Berlin — échange Erasmus</h3>
+        <p>Semestre d'échange académique dans le cadre du cursus à Polytech Marseille.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap" id="contact">
+  <div class="foot-grid">
+    <div>
+      <div class="foot-title">On en parle ?</div>
+      <div class="foot-contacts">
+        <a href="mailto:david.tovmasyan@etu.univ-amu.fr">david.tovmasyan@etu.univ-amu.fr</a>
+        <a href="https://github.com/Dave-tvs" target="_blank" rel="noopener">github.com/Dave-tvs</a>
+      </div>
+    </div>
+    <div class="foot-meta">
+      MARSEILLE / BERLIN<br>
+      MÉCANIQUE ÉNERGÉTIQUE<br>
+      DISPONIBLE POUR UN STAGE
+    </div>
+  </div>
+  <div class="ai-note">Page conçue avec l'aide de Claude (Anthropic) — recherche de contenu, code et mise en page.</div>
+</footer>
+
+</body>
+</html>
